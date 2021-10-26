@@ -1,19 +1,61 @@
 package main
 
 import (
-    handler "github.com/patoui/realestate/handler/http"
-    "net/http"
-
-    "github.com/go-chi/chi/v5"
-    "github.com/go-chi/chi/v5/middleware"
+	"context"
+	"fmt"
+	"github.com/patoui/realestate/db"
+	"github.com/patoui/realestate/handler"
+	"log"
+	"net"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 func main() {
-    r := chi.NewRouter()
-    r.Use(middleware.Logger)
-    r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-        w.Write([]byte("Hello World!"))
-    })
-    r.Get("/home", handler.Home)
-    http.ListenAndServe(":3000", r)
+	addr := ":8080"
+	listener, err := net.Listen("tcp", addr)
+	if err != nil {
+		log.Fatalf("Error occurred: %s", err.Error())
+	}
+
+	dbUser, dbPassword, dbName :=
+		os.Getenv("POSTGRES_USER"),
+		os.Getenv("POSTGRES_PASSWORD"),
+		os.Getenv("POSTGRES_DB")
+	database, err := db.Initialize(dbUser, dbPassword, dbName)
+	if err != nil {
+		log.Fatalf("Could not set up database: %v", err)
+	}
+	defer database.Conn.Close()
+
+	httpHandler := handler.NewHandler(database)
+	server := &http.Server{
+		Handler: httpHandler,
+	}
+
+	go func() {
+		server.Serve(listener)
+	}()
+
+	defer Stop(server)
+
+	log.Printf("Started server on %s", addr)
+
+	// listen for ctrl+c signal from terminal
+	ch := make(chan os.Signal, 1)
+	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
+	log.Println(fmt.Sprint(<-ch))
+	log.Println("Stopping API server.")
+}
+
+func Stop(server *http.Server) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := server.Shutdown(ctx); err != nil {
+		log.Printf("Could not shut down server correctly: %v\n", err)
+		os.Exit(1)
+	}
 }
