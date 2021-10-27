@@ -16,4 +16,6 @@ services:
     networks:
       - default
     ports:
-    - "8080:8080"
+      - "8080:8080"
+    volumes:
+      - ./:/go/src/github.com/patoui/realestate

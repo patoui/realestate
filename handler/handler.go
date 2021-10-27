@@ -18,6 +18,7 @@ func NewHandler(db db.Database) http.Handler {
 	router.NotFound(notFoundHandler)
 
 	router.Route("/items", items)
+	router.Route("/listings", listings)
 
 	return router
 }

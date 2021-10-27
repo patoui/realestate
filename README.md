@@ -7,9 +7,16 @@ Used as a playground to learn Go lang. Setup is heavily inspired by an [article]
 #### Requirements
 
 - [Migrate](https://github.com/golang-migrate/migrate) must be installed on the host machine
+- [Make](https://www.tutorialspoint.com/unix_commands/make.htm) is installed (usually via `apt install build-essential`)
 
-Simply git clone the repository and start docker:
+Simply git clone the repository and start the application:
 
 ```bash
-docker-composer up
+make start
+```
+
+To see CLI available commands, run:
+
+```bash
+make help
 ```

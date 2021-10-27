@@ -1,12 +1,17 @@
-FROM golang:1.17.2-alpine3.14 as builder
+FROM golang:1.17.2-alpine3.14
+
 COPY go.mod go.sum /go/src/github.com/patoui/realestate/
 WORKDIR /go/src/github.com/patoui/realestate
-RUN go mod download
-COPY . /go/src/github.com/patoui/realestate
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o build/realestate github.com/patoui/realestate
 
-FROM alpine
+RUN go mod download
+
+COPY . .
+
 RUN apk add --no-cache ca-certificates && update-ca-certificates
-COPY --from=builder /go/src/github.com/patoui/realestate/build/realestate /usr/bin/realestate
+
+ENV GO111MODULE=on
+RUN go get github.com/githubnemo/CompileDaemon
+
 EXPOSE 8080 8080
-ENTRYPOINT ["/usr/bin/realestate"]
+
+ENTRYPOINT CompileDaemon -build='go build -o build/realestate github.com/patoui/realestate' -command='./build/realestate' -color=true 2>&1
