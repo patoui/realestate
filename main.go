@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/patoui/realestate/db"
-	"github.com/patoui/realestate/handler"
 	"log"
 	"net"
 	"net/http"
@@ -12,6 +10,9 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/patoui/realestate/db"
+	"github.com/patoui/realestate/handler"
 )
 
 func main() {
