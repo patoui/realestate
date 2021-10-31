@@ -10,7 +10,27 @@ Used as a playground to learn Go lang. Setup is heavily inspired by an [article]
 
 ## Installation
 
-Simply git clone the repository and start the application:
+Start by cloning the repository:
+
+```bash
+git clone git@github.com:patoui/realestate.git
+
+OR 
+
+git clone https://github.com/patoui/realestate.git
+
+OR
+
+gh repo clone patoui/realestate
+```
+
+Then make a copy of the `.env.example` file:
+
+```bash
+cp .env.example .env
+```
+
+Now start the application:
 
 ```bash
 make start
