@@ -1,5 +1,16 @@
-import * as React from 'react'
-import * as Server from 'react-dom/server'
+/**
+  This CodeSandbox has been automatically generated using
+  `codesandboxer`. If you're curious how that happened, you can
+  check out our docs here: https://github.com/codesandbox/codesandboxer
 
-let Greet = () => <h1>Hello, world!</h1>
-console.log(Server.renderToString(<Greet />));
+  If you experience any struggles with this sandbox, please raise an issue
+  on github. :)
+*/
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './router';
+
+ReactDOM.render(
+<App />,
+document.getElementById('root')
+);

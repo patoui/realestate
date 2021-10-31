@@ -17,11 +17,20 @@ func NewHandler(db db.Database) http.Handler {
 	router.MethodNotAllowed(methodNotAllowedHandler)
 	router.NotFound(notFoundHandler)
 
-	router.Route("/items", items)
-	router.Route("/listings", listings)
+	// API routes
+	router.Group(func(r chi.Router) {
+		router.Route("/api/items", items)
+		router.Route("/api/listings", listings)
+	})
 
-	fileServer := http.FileServer(http.Dir("./static/"))
-	router.Handle("/static/*", http.StripPrefix("/static", fileServer))
+	// Serve static files/assets
+	fileServer := http.FileServer(http.Dir("./static/ui/"))
+	router.Handle("/static/*", http.StripPrefix("/static/ui", fileServer))
+
+	// TODO: handle 404s, determine if Go or React should be responsible.
+	router.Handle("/*", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/index.html")
+	}))
 
 	return router
 }

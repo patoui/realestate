@@ -1,12 +1,24 @@
 help:
+	    @echo ""
 	    @echo "Makefile commands:"
-	    @echo "database - Access database (psql) CLI"
-	    @echo "migrate-up - Run up migrations"
-	    @echo "migrate-down - Run down migrations"
-	    @echo "migrate-create name=migration_name_here - Creates up and down migration files"
-	    @echo "cli-server - Access go container cli"
-	    @echo "cli-database - Access database container cli"
-	    @echo "bundle - Bundle frontend assets (via esbuild)"
+	    @echo ""
+	    @echo "DATABASE"
+	    @echo ""
+	    @echo "database        - Access database (psql) CLI           - ex: make database"
+	    @echo "migrate-up      - Run up migrations                    - ex: make migrate-up"
+	    @echo "migrate-down    - Run down migrations                  - ex: make migrate-down"
+	    @echo "migrate-create  - Creates up and down migration files  - ex: migrate-create name=migration_name_here"
+	    @echo ""
+	    @echo "CONTAINERS"
+	    @echo ""
+	    @echo "cli-server      - Access go container cli              - ex: make cli-server"
+	    @echo "cli-database    - Access database container cli        - ex: make cli-database"
+	    @echo ""
+	    @echo "JAVASCRIPT"
+	    @echo ""
+	    @echo "js-bundle       - Bundle JavaScript assets             - ex: make js-bundle"
+	    @echo "js-install      - Install NPM package                  - ex: make js-install pkg=react"
+	    @echo ""
 
 start:
 	docker-compose -f docker-compose.yml up -d
@@ -32,5 +44,8 @@ cli-server:
 cli-database:
 	docker exec -it realestate_database /bin/bash
 
-bundle:
+js-bundle:
 	docker exec -it realestate_server /bin/sh -c "npm run bundle"
+
+js-install:
+	docker exec -it realestate_server /bin/sh -c "npm install $(pkg)"
