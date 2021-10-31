@@ -24,8 +24,8 @@ func NewHandler(db db.Database) http.Handler {
 	})
 
 	// Serve static files/assets
-	fileServer := http.FileServer(http.Dir("./static/ui/"))
-	router.Handle("/static/*", http.StripPrefix("/static/ui", fileServer))
+	fileServer := http.FileServer(http.Dir("./static/client/"))
+	router.Handle("/static/*", http.StripPrefix("/static/client", fileServer))
 
 	// TODO: handle 404s, determine if Go or React should be responsible.
 	router.Handle("/*", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
