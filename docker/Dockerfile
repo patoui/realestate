@@ -8,6 +8,7 @@ RUN go mod download
 COPY . .
 
 RUN apk add --no-cache ca-certificates && update-ca-certificates
+RUN apk add --update npm
 
 ENV GO111MODULE=on
 RUN go get github.com/githubnemo/CompileDaemon

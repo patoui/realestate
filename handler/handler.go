@@ -20,6 +20,9 @@ func NewHandler(db db.Database) http.Handler {
 	router.Route("/items", items)
 	router.Route("/listings", listings)
 
+	fileServer := http.FileServer(http.Dir("./static/"))
+	router.Handle("/static/*", http.StripPrefix("/static", fileServer))
+
 	return router
 }
 

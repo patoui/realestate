@@ -1,0 +1,24 @@
+{
+  "name": "realestate",
+  "version": "1.0.0",
+  "description": "Used as a playground to learn Go lang. Setup is heavily inspired by an [article](https://blog.logrocket.com/how-to-build-a-restful-api-with-docker-postgresql-and-go-chi/) by Michael Okoko.",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "./node_modules/.bin/esbuild assets/app.jsx --bundle --outfile=static/js/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patoui/realestate.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/patoui/realestate/issues"
+  },
+  "homepage": "https://github.com/patoui/realestate#readme",
+  "dependencies": {
+    "esbuild": "^0.13.11",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}

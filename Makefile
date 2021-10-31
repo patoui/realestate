@@ -6,6 +6,7 @@ help:
 	    @echo "migrate-create name=migration_name_here - Creates up and down migration files"
 	    @echo "cli-server - Access go container cli"
 	    @echo "cli-database - Access database container cli"
+	    @echo "bundle - Bundle frontend assets (via esbuild)"
 
 start:
 	docker-compose -f docker-compose.yml up -d
@@ -26,7 +27,10 @@ migrate-create:
 	 migrate create -ext sql -dir db/migrations -seq $(name)
 
 cli-server:
-	docker exec -it realestate_server_1 /bin/sh
+	docker exec -it realestate_server /bin/sh
 
 cli-database:
-	docker exec -it realestate_database_1 /bin/bash
+	docker exec -it realestate_database /bin/bash
+
+bundle:
+	docker exec -it realestate_server /bin/sh -c "npm run bundle"

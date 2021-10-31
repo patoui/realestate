@@ -2,3 +2,5 @@
 .idea
 go.sum
 build/*
+node_modules
+static/js/*
