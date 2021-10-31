@@ -4,7 +4,7 @@
   "description": "Used as a playground to learn Go lang. Setup is heavily inspired by an [article](https://blog.logrocket.com/how-to-build-a-restful-api-with-docker-postgresql-and-go-chi/) by Michael Okoko.",
   "main": "index.js",
   "scripts": {
-    "bundle": "./node_modules/.bin/esbuild assets/app.jsx --bundle --loader:.js=jsx --outfile=static/client/js/app.js"
+    "bundle": "./node_modules/.bin/esbuild assets/app.jsx --bundle --loader:.js=jsx --outfile=static/client/js/app.js --watch"
   },
   "repository": {
     "type": "git",
