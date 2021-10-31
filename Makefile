@@ -17,14 +17,14 @@ stop:
 database:
 	docker-compose -f docker-compose.yml exec database psql -Urealestate -drealestate_db
 
+migrate-create:
+	 migrate create -ext sql -dir db/migrations -seq $(name)
+
 migrate-up:
 	migrate -database postgres://realestate:realestate_pass@localhost:5432/realestate_db?sslmode=disable -path db/migrations up
 
 migrate-down:
 	migrate -database postgres://realestate:realestate_pass@localhost:5432/realestate_db?sslmode=disable -path db/migrations down
-
-migrate-create:
-	 migrate create -ext sql -dir db/migrations -seq $(name)
 
 cli-server:
 	docker exec -it realestate_server /bin/sh
