@@ -7,25 +7,19 @@ import {
 } from "react-router-dom";
 
 import Home from "./Home/Home";
+import NotFound from "./Errors/NotFound";
 
 export default function BasicExample() {
   return (
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-        </ul>
-
-        <hr />
-
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="*">
+          <NotFound />
+        </Route>
+      </Switch>
     </Router>
   );
 }
