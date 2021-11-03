@@ -2,17 +2,22 @@ help:
 	    @echo ""
 	    @echo "Makefile commands:"
 	    @echo ""
+	    @echo "DOCKER"
+	    @echo ""
+	    @echo "start           - Start the docker containers                     - ex: make start"
+	    @echo "stop            - Stop the docker containers                      - ex: make stop"
+	    @echo ""
+	    @echo "CLIs"
+	    @echo ""
+	    @echo "server          - Access go container                             - ex: make server"
+	    @echo "database        - Access database container                       - ex: make database"
+	    @echo "database-cli    - Access database (psql) CLI                      - ex: make database-cli"
+	    @echo ""
 	    @echo "DATABASE"
 	    @echo ""
-	    @echo "database        - Access database (psql) CLI                      - ex: make database"
 	    @echo "migrate-up      - Run up migrations                               - ex: make migrate-up"
 	    @echo "migrate-down    - Run down migrations                             - ex: make migrate-down"
 	    @echo "migrate-create  - Creates up and down migration files             - ex: migrate-create name=migration_name_here"
-	    @echo ""
-	    @echo "CONTAINERS"
-	    @echo ""
-	    @echo "cli-server      - Access go container cli                         - ex: make cli-server"
-	    @echo "cli-database    - Access database container cli                   - ex: make cli-database"
 	    @echo ""
 	    @echo "JAVASCRIPT"
 	    @echo ""
@@ -26,7 +31,13 @@ start:
 stop:
 	docker-compose -f docker-compose.yml down
 
+server:
+	docker exec -it realestate_server /bin/sh
+
 database:
+	docker exec -it realestate_database /bin/bash
+
+database-cli:
 	docker-compose -f docker-compose.yml exec database psql -Urealestate -drealestate_db
 
 migrate-create:
@@ -37,12 +48,6 @@ migrate-up:
 
 migrate-down:
 	migrate -database postgres://realestate:realestate_pass@localhost:5432/realestate_db?sslmode=disable -path db/migrations down
-
-cli-server:
-	docker exec -it realestate_server /bin/sh
-
-cli-database:
-	docker exec -it realestate_database /bin/bash
 
 js-bundle:
 	docker exec -it realestate_server /bin/sh -c "npm run bundle"

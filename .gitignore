@@ -4,3 +4,4 @@ go.sum
 build/*
 node_modules
 static/client/*
+docker/postgres/*
