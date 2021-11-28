@@ -24,7 +24,7 @@ func NewHandler(db db.Database) http.Handler {
 		router.Route("/api/listings", listings)
 	})
 
-	router.Handle("/", clientHandler())
+	router.Route("/", home)
 
 	// Serve static files/assets
 	fileServer := http.FileServer(http.Dir("./static/client/"))
